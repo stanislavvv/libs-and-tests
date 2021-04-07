@@ -86,3 +86,7 @@ dkms.conf
 *.out
 *.app
 tests
+
+# generated and local
+see_docs.sh
+docs

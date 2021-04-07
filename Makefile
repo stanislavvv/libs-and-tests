@@ -56,6 +56,9 @@ clean:
 	$(RM) *.elf *.bin *.hex *.srec *.list *.map tests tests.su
 	$(RM) -r docs
 
+docs: clean
+	doxygen Doxyfile
+
 # phony rules
 .PHONY: all
 all: $(TARGET)
