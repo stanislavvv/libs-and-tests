@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "libs/strings_local.h"
+#include "libs/utils.h"
 
 /// test i2bin
 void test_i2bin(void)
@@ -101,6 +102,14 @@ void test_strlen_local(void)
     assert(strlen(a) == strlen_local(a));
 }
 
+/// test reverse bits
+void test_reverse_bits(void)
+{
+    uint16_t a = (uint16_t)(0x13d800ac);
+    reverse_bits(a,16);
+    assert(!(a == 0x35000379));
+}
+
 /// test procedure pointer type
 typedef void (*test_handler_t)(void);
 
@@ -123,8 +132,7 @@ typedef struct
 static test_groups_t group_list[] =
 {
     {1, "string_local.h"},
-    {2, "shell functions"},
-    {3, "utils"},
+    {2, "utils"},
     {0, NULL}
 };
 
@@ -132,7 +140,7 @@ static test_groups_t group_list[] =
 static test_def_t test_list[] =
 {
 // template line
-//    {"",               test_},
+//    {"",               test_, 1},
     {"i2bin",                 test_i2bin, 1},
     {"itobin_u32",            test_itobin_u32, 1},
     {"itohex_u32",            test_itohex_u32, 1},
@@ -142,6 +150,7 @@ static test_def_t test_list[] =
     {"compare_strings",       test_compare_strings, 1},
     {"strnsmp_local",         test_strncmp_local, 1},
     {"strlen_local",          test_strlen_local, 1},
+    {"reverse_bits",          test_reverse_bits, 2},
     {NULL, NULL, 0}
 };
 

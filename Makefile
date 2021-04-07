@@ -28,7 +28,7 @@ OBJS = $(SRCFILES:%.$(SRC_EXT)=%.o)
 DEPS = $(OBJECTS:.o=.d)
 
 # default rule
-default: all
+default: clean all
 
 # non-phony targets
 $(TARGET): $(OBJS)

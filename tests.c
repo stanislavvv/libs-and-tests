@@ -36,8 +36,9 @@ int main(int argc, char *argv[])
         {
             if (test_list[i].test_group_id == group_list[g].group_id)
             {
-                printf("%3d %s\n", n, test_list[i].test_str);
+                printf("%3d %s", n, test_list[i].test_str);
                 test_list[i].test_proc();
+                printf(" -- OK\n");
                 n++;
             }
             i++;
