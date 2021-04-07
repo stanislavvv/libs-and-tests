@@ -106,7 +106,7 @@ void test_strlen_local(void)
 void test_reverse_bits(void)
 {
     uint16_t a = (uint16_t)(0x13d800ac);
-    reverse_bits(a,16);
+    reverse_bits(a, 16);
     assert(!(a == 0x35000379));
 }
 

@@ -1,8 +1,14 @@
-TGT_CFLAGS	+= -I. -I./libs
+CSTD            ?= -std=c99
+
+TGT_CFLAGS	+= -I. -I./libs $(CSTD)
 TGT_CXXFLAGS	+= -I. -I./libs
 
 BINARY		= tests
 SRCFILES	= tests.c
+
+TOCHECK := $(wildcard *.c *.h *.cpp *.cxx)
+TOCHECK += $(wildcard libs/*.c libs/*.h libs/*.cpp libs/*.cxx)
+
 
 SRC_EXT = c
 
@@ -38,6 +44,11 @@ $(TARGET): $(OBJS)
 %.o: %.c*
 	echo $(CCOBJFLAG)
 	$(CC) $(CCOBJFLAG) -o $(*).o -c $(*).c
+
+# check sources. -$(CSTD) translate -std=... to --std=...
+check:
+	cppcheck -q --enable=all -$(CSTD) --check-config --includes-file=mk/cppcheck.includes $(TOCHECK)
+	vera++ --exclusions mk/vera++.excl -s -e $(TOCHECK)
 
 clean:
 	@#printf "  CLEAN\n"

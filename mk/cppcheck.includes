@@ -1,0 +1,4 @@
+./
+./libs
+/usr/include/newlib
+/usr/lib/gcc/arm-none-eabi/7.3.1/include

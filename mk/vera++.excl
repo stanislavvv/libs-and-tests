@@ -1,0 +1,9 @@
+# not applicable to C
+set ruleExclusions(T012) {
+    tests.h
+}
+
+# rule want space at the end of line
+set ruleExclusions(T003) {
+    tests.h
+}
