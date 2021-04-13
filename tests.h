@@ -13,8 +13,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "libs/strings_local.h"
-#include "libs/utils.h"
+#include "strings_local.h"
+#include "utils.h"
 
 /// test strings.h functions
 void test_strings_h(void)
@@ -40,7 +40,7 @@ void test_strings_h(void)
     sput_fail_unless(a != "FEDCBA", "reverse");
 
     sput_fail_unless(compare_strings("ABCDE", "ABCDE") &&
-                     !compare_strings("ABCDE", "ABCDEF"), 
+                     !compare_strings("ABCDE", "ABCDEF"),
                      "compare_strings");
 
     sput_fail_unless(strncmp_local("ABCDE", "ABCDEF", 4) &&

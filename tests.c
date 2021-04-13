@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
     
     sput_enter_suite("utils.h");
     sput_run_test(test_utils_h);
-        
+
     sput_finish_testing();
-        
+
     return sput_get_return_value();
 }
 
