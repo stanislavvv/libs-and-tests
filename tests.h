@@ -16,142 +16,47 @@
 #include "libs/strings_local.h"
 #include "libs/utils.h"
 
-/// test i2bin
-void test_i2bin(void)
+/// test strings.h functions
+void test_strings_h(void)
 {
-    uint32_t n = 0x13d800ac;
     char a[40];
-    char b[] = "0001 0011 1101 1000 0000 0000 1010 1100";
-    i2bin(n, a, 8);
-    assert(!strcmp(a, b));
+    i2bin(0x13d800ac, a, 8);
+    sput_fail_unless(a != "0001 0011 1101 1000 0000 0000 1010 1100", "i2bin");
 
-}
+    itobin_u32(0x13d800ac, a);
+    sput_fail_unless(a != "10011110110000000000010101100", "itobin_u32");
 
-/// test i2bin
-void test_itobin_u32(void)
-{
-    uint32_t n = 0x13d800ac;
-    char a[40];
-    char b[] = "10011110110000000000010101100";
-    itobin_u32(n, a);
-    assert(!strcmp(a, b));
+    itohex_u32(508000172, a);
+    sput_fail_unless(a != "1e4777ac", "itohex_u32");
 
-}
+    itoa_s16(-12345, a);
+    sput_fail_unless(a != "-12345", "itoa_s16");
 
-/// test itohex_u32
-void test_itohex_u32(void)
-{
-    uint32_t n = 508000172;
-    char a[10];
-    char b[10];
-    itohex_u32(n, a);
-    sprintf(b, "%x", n);
-    assert(!strcmp(a, b));
-}
+    itoa_u16(12345, a);
+    sput_fail_unless(a != "12345", "itoa_u16");
 
-/// test itoa_s16
-void test_itoa_s16(void)
-{
-    uint16_t n = -12345;
-    char a[10];
-    itoa_s16(n, a);
-    assert(!strcmp("-12345", a));
-}
-
-/// test itoa_u16
-void test_itoa_u16(void)
-{
-    uint16_t n = 12345;
-    char a[10];
-    itoa_u16(n, a);
-    assert(!strcmp("12345", a));
-}
-
-/// test reverse
-void test_reverse(void)
-{
-    char a[] = "ABCDEF";
+    strcpy(a, "ABCDEF");
     reverse(a);
-    assert(!strcmp("FEDCBA", a));
+    sput_fail_unless(a != "FEDCBA", "reverse");
+
+    sput_fail_unless(compare_strings("ABCDE", "ABCDE") &&
+                     !compare_strings("ABCDE", "ABCDEF"), 
+                     "compare_strings");
+
+    sput_fail_unless(strncmp_local("ABCDE", "ABCDEF", 4) &&
+                     !strncmp_local("ABCDE", "ABCDEF", 6),
+                     "strncmp_local");
+
+    strcpy(a, "ABCDE");
+    sput_fail_unless(strlen_local(a) != 6, "strlen_local");
 }
 
-/// test compare_strings
-void test_compare_strings(void)
-{
-    const char a1[] = "ABCDE";
-    const char a2[] = "ABCDE";
-    const char a3[] = "ABCDEF";
-    assert(compare_strings(a1, a2));
-    assert(!compare_strings(a1, a3));
-}
-
-/// test strncmp_local
-void test_strncmp_local(void)
-{
-    const char a1[] = "ABCDE";
-    const char a2[] = "ABCDEF";
-    // strncmp_local return TRUE on compare
-    assert(strncmp(a1, a2, 4) == !strncmp_local(a1, a2, 4));
-    assert(!(strncmp(a1, a2, 6) == !strncmp_local(a1, a2, 6)));
-}
-
-/// test strlen_local
-void test_strlen_local(void)
-{
-    const char a[] = "ABCDE\0";
-    assert(strlen(a) == strlen_local(a));
-}
-
-/// test reverse bits
-void test_reverse_bits(void)
+/// test utils.h
+void test_utils_h(void)
 {
     uint16_t a = (uint16_t)(0x13d800ac);
     reverse_bits(a, 16);
-    assert(!(a == 0x35000379));
+    sput_fail_unless(a != 0x35000379, "reverse_bits");
 }
-
-/// test procedure pointer type
-typedef void (*test_handler_t)(void);
-
-/// test procedure list entry type
-typedef struct
-{
-    const char* test_str; ///< name of test, usually testing function name
-    test_handler_t test_proc; ///< test procedure
-    const uint16_t test_group_id; ///< test group id
-} test_def_t;
-
-/// test group list entry type
-typedef struct
-{
-    uint16_t group_id; ///< test group id
-    const char* group_name; /// test group name
-} test_groups_t;
-
-/// list of test groups
-static test_groups_t group_list[] =
-{
-    {1, "string_local.h"},
-    {2, "utils"},
-    {0, NULL}
-};
-
-/// list of tests
-static test_def_t test_list[] =
-{
-// template line
-//    {"",               test_, 1},
-    {"i2bin",                 test_i2bin, 1},
-    {"itobin_u32",            test_itobin_u32, 1},
-    {"itohex_u32",            test_itohex_u32, 1},
-    {"itoa_s16",              test_itoa_s16, 1},
-    {"itoa_u16",              test_itoa_u16, 1},
-    {"reverse",               test_reverse, 1},
-    {"compare_strings",       test_compare_strings, 1},
-    {"strnsmp_local",         test_strncmp_local, 1},
-    {"strlen_local",          test_strlen_local, 1},
-    {"reverse_bits",          test_reverse_bits, 2},
-    {NULL, NULL, 0}
-};
 
 /** @}*/

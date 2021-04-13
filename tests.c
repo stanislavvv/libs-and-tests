@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "sput.h"
 #include "tests.h"
 
 /**
@@ -23,31 +24,17 @@
  */
 int main(int argc, char *argv[])
 {
-    printf("\n********************************\n");
-    printf("*       Begin tests...         *\n");
-    printf("********************************\n");
-    int g = 0;
-    while (group_list[g].group_id != 0)
-    {
-        printf("\n*** testgroup: %d. %s ***\n", g+1, group_list[g].group_name);
-        int i = 0;
-        int n = 1;
-        while (test_list[i].test_proc != NULL)
-        {
-            if (test_list[i].test_group_id == group_list[g].group_id)
-            {
-                printf("%3d %s", n, test_list[i].test_str);
-                test_list[i].test_proc();
-                printf(" -- OK\n");
-                n++;
-            }
-            i++;
-        }
-        g++;
-    }
-    printf("\n********************************\n");
-    printf("*       All tests passed!      *\n");
-    printf("********************************\n\n");
+    sput_start_testing();
+    
+    sput_enter_suite("strings.h");
+    sput_run_test(test_strings_h);
+    
+    sput_enter_suite("utils.h");
+    sput_run_test(test_utils_h);
+        
+    sput_finish_testing();
+        
+    return sput_get_return_value();
 }
 
 

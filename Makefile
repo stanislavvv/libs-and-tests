@@ -47,7 +47,7 @@ $(TARGET): $(OBJS)
 
 # check sources. -$(CSTD) translate -std=... to --std=...
 check:
-	cppcheck -q --enable=all -$(CSTD) --check-config --includes-file=mk/cppcheck.includes $(TOCHECK)
+	cppcheck -q --enable=all --suppress=missingIncludeSystem --suppress=ConfigurationNotChecked -$(CSTD) --check-config --includes-file=mk/cppcheck.includes $(TOCHECK)
 	vera++ --exclusions mk/vera++.excl -s -e $(TOCHECK)
 
 clean:
