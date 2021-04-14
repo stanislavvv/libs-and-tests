@@ -14,10 +14,10 @@ SRC_EXT = c
 
 # tool macros
 CC := gcc
-CCFLAG := -std=c99 -I. -DUNITTEST
+CCFLAG := -std=c99 -I. -DUNITTEST --coverage
 DBGFLAG := -g
 CCOBJFLAG := $(CCFLAG) -c
-LDFLAGS := -lc -lgcc
+LDFLAGS := -lc -lgcc --coverage
 
 # path macros
 BIN_PATH := bin
@@ -40,6 +40,9 @@ default: clean all
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $@
 	./$(TARGET)
+	@mkdir -p test_report
+	@lcov -q --capture --directory . --output-file test_report/coverage.info
+	@genhtml -q test_report/coverage.info --output-directory test_report
 
 %.o: %.c*
 	echo $(CCOBJFLAG)
@@ -53,8 +56,9 @@ check:
 clean:
 	@#printf "  CLEAN\n"
 	$(RM) *.o *.d generated.* $(OBJS) $(patsubst %.o,%.d,$(OBJS)) $(patsubst %.o,%.su,$(OBJS))
-	$(RM) *.elf *.bin *.hex *.srec *.list *.map tests tests.su
-	$(RM) -r docs
+	$(RM) $(patsubst %.o,%.gcda,$(OBJS)) $(patsubst %.o,%.gcno,$(OBJS))
+	$(RM) *.elf *.bin *.hex *.srec *.list *.map tests tests.su *.gcno *.gcda
+	$(RM) -r docs test_report
 
 docs: clean
 	doxygen Doxyfile

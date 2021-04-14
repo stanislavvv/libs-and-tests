@@ -87,6 +87,12 @@ dkms.conf
 *.app
 tests
 
+# Test coverage data
+*.gcno
+*.gcda
+test_report/*
+
 # generated and local
 see_docs.sh
+see_tests.sh
 docs
