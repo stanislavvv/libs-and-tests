@@ -71,7 +71,6 @@ static inline boolean compare_strings(const char *first, const char *second)
  /**
   * @brief reverse string s in place
   * @param s[] string to reverse
-  * @return none
   */
 static inline void reverse(char s[])
 {
@@ -88,7 +87,6 @@ static inline void reverse(char s[])
  * @brief convert uint16_t n to characters in s
  * @param n number to convert
  * @param s[] result will be here
- * @return none
  */
 static inline void itoa_u16(uint16_t n, char s[])
 {
@@ -106,7 +104,6 @@ static inline void itoa_u16(uint16_t n, char s[])
  * @brief convert int16_t n to characters in s with sign
  * @param n number to convert
  * @param s[] result will be here
- * @return none
  */
 static inline void itoa_s16(int16_t n, char s[])
 {
@@ -136,7 +133,6 @@ static inline void itoa_s16(int16_t n, char s[])
  * @brief convert uint32_t n to hex string in s
  * @param n number to convert
  * @param s[] result will be here
- * @return none
  */
 static inline void itohex_u32(uint32_t n, char s[])
 {
@@ -155,7 +151,6 @@ static inline void itohex_u32(uint32_t n, char s[])
  * @brief convert uint32_t n to bin string in s
  * @param n number to convert
  * @param s[] result will be here
- * @return none
  *
  * ineffective, but it works
  */
